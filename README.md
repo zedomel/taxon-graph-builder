@@ -8,6 +8,7 @@ For an example of a published taxon graph, please see [doi:10.5281/zenodo.755513
  
  * [make](https://en.wikipedia.org/wiki/Make_(software)) 
  * [bash](https://en.wikipedia.org/wiki/Bash_(Unix_shell))
+ * [git](https://en.wikipedia.org/wiki/Git)
  * internet connection
 
 ## Build
