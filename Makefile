@@ -86,8 +86,8 @@ $(TAXON_CACHE) $(TAXON_MAP):
 
 	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeader.tsv.gz > $(TAXON_MAP)
 	# normalize the ranks using nomer
-	zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f3 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_ranks.tsv
-	zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f7 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_path_ranks.tsv
+	zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f3 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_ranks.tsv
+	zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f7 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_path_ranks.tsv
 
 	
 	paste <(zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f1-2) <(cat $(BUILD_DIR)/norm_ranks.tsv) <(zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f4-6) <(cat $(BUILD_DIR)/norm_path_ranks.tsv) <(zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f8-) | gzip > $(BUILD_DIR)/taxonCacheNorm.tsv.gz
