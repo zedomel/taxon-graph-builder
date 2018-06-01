@@ -100,7 +100,7 @@ dist/taxon-graph.zip: $(TAXON_MAP) $(TAXON_CACHE)
 	md5sum $(TAXON_CACHE) > $(TAXON_CACHE).md5
 	
 	mkdir -p dist
-	cp Makefile README prefixes.tsv $(TAXON_MAP) $(TAXON_MAP).md5 $(TAXON_CACHE) $(TAXON_CACHE).md5 dist/	
+	cp Makefile static/README static/prefixes.tsv $(TAXON_MAP) $(TAXON_MAP).md5 $(TAXON_CACHE) $(TAXON_CACHE).md5 dist/	
 	
 	head -n11 $(TAXON_MAP) > dist/taxonMapFirst10.tsv
 	head -n11 $(TAXON_CACHE) > dist/taxonCacheFirst10.tsv
