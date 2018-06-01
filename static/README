@@ -14,9 +14,6 @@ Files
   README 
       this file
 
-  Makefile
-      make script used to compile taxonCache* and taxonMap* files.
-
   taxonCache.tsv.gz 
      Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.2/taxon-0.3.2.zip on 21 May 2018.
  
