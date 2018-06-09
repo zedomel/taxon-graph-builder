@@ -86,4 +86,14 @@ This taxon archive version includes the following:
 
 6. finally, the resulting taxonMap.tsv.gz. and taxonCache.tsv.gz files were validated using the nomer v0.0.7 validate-term-link and validate-term commands, respectively. The result indicated that all lines (other than the header) passed the validation tests.
 
+org.globalbioticinteractions.taxon v0.3.3, TDB
+
+This taxon archive versoin includes the following:
+
+1. normalizing taxonomic ranks using nomer's taxon rank matcher
+
+2. include more manual taxonomic name mappings provided by Brian Hayden and collaborators.
+
+3. update taxonCache and taxonMap using an automated scripts available at https://doi.org/10.5281/zenodo.1286023 . 
+
 Please note that nomer and elton rely on web accessible apis like taxonomy resolution services and data portals. This dependence on external web-only accessible services might make reproduction of the results tricky due to network outages, server failures, upgrades, downgrades, data loss and/or abandonment of informatics projects/ datasets. 
