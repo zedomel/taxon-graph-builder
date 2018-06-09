@@ -57,8 +57,8 @@ $(TAXON_CACHE).update $(TAXON_MAP).update:
 	diff --changed-group-format='%>' --unchanged-group-format='' $(BUILD_DIR)/term_link_names_sorted.tsv $(BUILD_DIR)/names_sorted.tsv | gzip > $(BUILD_DIR)/names_new.tsv.gz
 
 	zcat $(BUILD_DIR)/names_new.tsv.gz | $(NOMER) append globi-correct | cut -f1,2,4,5 | sort | uniq | gzip > $(BUILD_DIR)/names_new_corrected.tsv.gz
-	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=corrected.properties globi-enrich | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
-	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=corrected.properties globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties globi-enrich | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
+	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 
 	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f6-14 | gzip > $(BUILD_DIR)/term_match.tsv.gz
 	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f1,2,6,7 | gzip > $(BUILD_DIR)/term_link_match.tsv.gz
