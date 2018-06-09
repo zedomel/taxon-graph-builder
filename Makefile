@@ -23,7 +23,7 @@ TAXON_GRAPH_UPDATE:=$(BUILD_DIR)/taxon_graph_update.zip
 all: update resolve normalize package
 
 clean:
-	rm -r $(BUILD_DIR)/* dist/*
+	rm -rf $(BUILD_DIR)/* dist/*
 
 $(STAMP):
 	mkdir -p $(BUILD_DIR) && touch $@
