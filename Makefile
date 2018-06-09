@@ -40,7 +40,7 @@ $(NAMES): $(ELTON_JAR)
 update: $(NAMES)
 
 $(NOMER_JAR):
-	wget -q "https://github.com/globalbioticinteractions/nomer/releases/download/0.1.0/nomer.jar" -O $(NOMER_JAR)
+	wget -q "https://github.com/globalbioticinteractions/nomer/releases/download/0.1.1/nomer.jar" -O $(NOMER_JAR)
 
 $(BUILD_DIR)/term_link.tsv.gz:
 	wget -q "$(TAXON_GRAPH_URL_PREFIX)/taxonMap.tsv.gz" -O $(BUILD_DIR)/term_link.tsv.gz
