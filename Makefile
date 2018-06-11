@@ -73,7 +73,7 @@ $(TAXON_CACHE).update $(TAXON_MAP).update:
 	zcat $(BUILD_DIR)/term_link_match_validated.tsv.gz | grep -v "FAIL" | cut -f3- | gzip > $(TAXON_MAP).update
 
 
-$(TAXON_CACHE) $(TAXON_MAP):
+$(TAXON_CACHE) $(TAXON_MAP): $(BUILD_DIR)/term.tsv.gz
 	# swap working files with final result
 	zcat $(BUILD_DIR)/term.tsv.gz | tail -n +2 | gzip > $(BUILD_DIR)/term_no_header.tsv.gz
 	zcat $(BUILD_DIR)/term.tsv.gz | head -n1 | gzip > $(BUILD_DIR)/term_header.tsv.gz
