@@ -15,7 +15,7 @@ Files
       this file
 
   taxonCache.tsv.gz 
-     Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.2/taxon-0.3.2.zip on 21 May 2018.
+     Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.2/taxon-0.3.3.zip on 2018-06-12.
  
   taxonCache.tsv.gz.md5
      md5 hash of taxonCache.tsv.gz
@@ -24,7 +24,7 @@ Files
       Header and 10 following lines from taxonCache.tsv.gz.
  
   taxonMap.tsv.gz 
-      Links between taxon name and ids across various taxon providers. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.2/taxon-0.3.2.zip on 21 May 2018. 
+      Links between taxon name and ids across various taxon providers. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.2/taxon-0.3.3.zip on 2018-06-12. 
 
   taxonMap.tsv.gz.md5 
       md5 hash of taxonMap.tsv.gz.md5 
@@ -34,6 +34,18 @@ Files
  
   prefixes.tsv
       Term prefixes and their associated uri schemes. 
+
+  names.tsv.gz
+      Corpus of names used to resolve and link. Generated using https://github.com/globalbioticinteractions/elton .
+
+  names.tsv.gz.md5
+      md5 hash of names.tsv.gz.md5
+
+  namesUnresolved.tsv.gz
+      Names that are not (yet) linked to name sources using https://github.com/globalbioticinteractions/nomer .
+
+  namesUnresolved.tsv.gz.md5
+      md5 hash of namesUnresolved.tsv.gz 
 
 Column Descriptions
 
@@ -55,6 +67,16 @@ Column Descriptions
     2 | providedTaxonName
     3 | resolvedTaxonId
     4 | resolvedTaxonName
+
+  names.tsv.gz
+
+    1 | providedTaxonId
+    2 | providedTaxonName
+
+   namesUnresolved.tsv.gz
+
+    1 | providedTaxonId
+    2 | providedTaxonName
 
 References
 
@@ -86,7 +108,7 @@ This taxon archive version includes the following:
 
 6. finally, the resulting taxonMap.tsv.gz. and taxonCache.tsv.gz files were validated using the nomer v0.0.7 validate-term-link and validate-term commands, respectively. The result indicated that all lines (other than the header) passed the validation tests.
 
-org.globalbioticinteractions.taxon v0.3.3, TBD
+org.globalbioticinteractions.taxon v0.3.3, 2018-06-12
 
 This taxon archive versoin includes the following:
 
@@ -95,5 +117,7 @@ This taxon archive versoin includes the following:
 2. include more manual taxonomic name mappings provided by Brian Hayden and collaborators.
 
 3. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023 . 
+
+4. remove mapping to NCBI taxa with name "Small" (and associated OTT).
 
 Please note that nomer and elton rely on web accessible apis like taxonomy resolution services and data portals. This dependence on external web-only accessible services might make reproduction of the results tricky due to network outages, server failures, upgrades, downgrades, data loss and/or abandonment of informatics projects/ datasets. 
