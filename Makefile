@@ -96,8 +96,8 @@ $(TAXON_CACHE) $(TAXON_MAP): $(BUILD_DIR)/term.tsv.gz
 normalize: $(TAXON_CACHE)
 
 dist/taxon-graph.zip: $(TAXON_MAP) $(TAXON_CACHE)
-	md5sum $(TAXON_MAP) > $(TAXON_MAP).md5
-	md5sum $(TAXON_CACHE) > $(TAXON_CACHE).md5
+	md5sum $(TAXON_MAP) | cut -d " " -f1 > $(TAXON_MAP).md5
+	md5sum $(TAXON_CACHE) | cut -d " " -f1 > $(TAXON_CACHE).md5
 	
 	mkdir -p dist
 	cp static/README static/prefixes.tsv $(TAXON_MAP) $(TAXON_MAP).md5 $(TAXON_CACHE) $(TAXON_CACHE).md5 dist/	
@@ -105,6 +105,11 @@ dist/taxon-graph.zip: $(TAXON_MAP) $(TAXON_CACHE)
 	head -n11 $(TAXON_MAP) > dist/taxonMapFirst10.tsv
 	head -n11 $(TAXON_CACHE) > dist/taxonCacheFirst10.tsv
 
+	cat $(BUILD_DIR)/names_sorted.tsv | gzip > dist/names.tsv.gz
+	md5sum dist/names.tsv.gz | cut -d " " -f1 > dist/names.tsv.gz.md5
+	cp $(BUILD_DIR)/term_unresolved.tsv.gz dist/namesUnresolved.tsv.gz
+	md5sum dist/namesUnresolved.tsv.gz | cut -d " " -f1 > dist/namesUnresolved.tsv.gz.md5
+ 
 	cd dist && zip taxon-graph.zip *
 		
 	
