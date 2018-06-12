@@ -32,7 +32,7 @@ $(ELTON_JAR): $(STAMP)
 	wget -q "https://github.com/globalbioticinteractions/elton/releases/download/0.4.5/elton.jar" -O $(ELTON_JAR)
 
 $(NAMES): $(ELTON_JAR)
-	-$(ELTON) update --cache-dir=$(BUILD_DIR)/datasets
+	$(ELTON) update --cache-dir=$(BUILD_DIR)/datasets
 	$(ELTON) names --cache-dir=$(BUILD_DIR)/datasets | cut -f1-7 | gzip > $(BUILD_DIR)/globi-names.tsv.gz
 	zcat $(BUILD_DIR)/globi-names.tsv.gz | sort | uniq | gzip > $(BUILD_DIR)/globi-names-sorted.tsv.gz
 	mv $(BUILD_DIR)/globi-names-sorted.tsv.gz $(NAMES)
