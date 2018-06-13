@@ -16,14 +16,15 @@ TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/1250572/files
 TAXON_CACHE:=$(BUILD_DIR)/taxonCache.tsv.gz
 TAXON_MAP:=$(BUILD_DIR)/taxonMap.tsv.gz
 
-TAXON_GRAPH_UPDATE:=$(BUILD_DIR)/taxon_graph_update.zip
+DIST_DIR:=dist
+TAXON_GRAPH_ARCHIVE:=$(DIST_DIR)/taxon-graph.tar.gz
 
 .PHONY: all clean update resolve normalize package
 
 all: update resolve normalize package
 
 clean:
-	rm -rf $(BUILD_DIR)/* dist/*
+	rm -rf $(BUILD_DIR)/* $(DIST_DIR)/*
 
 $(STAMP):
 	mkdir -p $(BUILD_DIR) && touch $@
@@ -95,7 +96,7 @@ $(TAXON_CACHE) $(TAXON_MAP): $(BUILD_DIR)/term.tsv.gz
 
 normalize: $(TAXON_CACHE)
 
-dist/taxon-graph.zip: $(TAXON_MAP) $(TAXON_CACHE)
+$(TAXON_GRAPH_ARCHIVE): $(TAXON_MAP) $(TAXON_CACHE)
 	md5sum $(TAXON_MAP) | cut -d " " -f1 > $(TAXON_MAP).md5
 	md5sum $(TAXON_CACHE) | cut -d " " -f1 > $(TAXON_CACHE).md5
 	
@@ -110,7 +111,7 @@ dist/taxon-graph.zip: $(TAXON_MAP) $(TAXON_CACHE)
 	cp $(BUILD_DIR)/term_unresolved.tsv.gz dist/namesUnresolved.tsv.gz
 	md5sum dist/namesUnresolved.tsv.gz | cut -d " " -f1 > dist/namesUnresolved.tsv.gz.md5
  
-	cd dist && zip taxon-graph.zip *
+	cd dist && tar cvzf taxon-graph.tar.gz README taxonMap* taxonCache* names* prefixes.tsv
 		
 	
-package: dist/taxon-graph.zip
+package: $(TAXON_GRAPH_ARCHIVE)
