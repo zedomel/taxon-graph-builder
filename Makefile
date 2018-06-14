@@ -103,8 +103,8 @@ $(TAXON_GRAPH_ARCHIVE): $(TAXON_MAP) $(TAXON_CACHE)
 	mkdir -p dist
 	cp static/README static/prefixes.tsv $(TAXON_MAP) $(TAXON_MAP).md5 $(TAXON_CACHE) $(TAXON_CACHE).md5 dist/	
 	
-	head -n11 $(TAXON_MAP) > dist/taxonMapFirst10.tsv
-	head -n11 $(TAXON_CACHE) > dist/taxonCacheFirst10.tsv
+	zcat $(TAXON_MAP) | head -n11 > dist/taxonMapFirst10.tsv
+	zcat $(TAXON_CACHE) | head -n11 > dist/taxonCacheFirst10.tsv
 
 	cat $(BUILD_DIR)/names_sorted.tsv | gzip > dist/names.tsv.gz
 	md5sum dist/names.tsv.gz | cut -d " " -f1 > dist/names.tsv.gz.md5
