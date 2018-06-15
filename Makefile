@@ -2,9 +2,11 @@ SHELL=/bin/bash
 BUILD_DIR=target
 STAMP=$(BUILD_DIR)/.$(BUILD_DIR)stamp
 
+ELTON_VERSION:=0.5.0
 ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -Dgithub.client.id=$$GITHUB_CLIENT_ID -Dgithub.client.secret=$$GITHUB_CLIENT_SECRET -jar $(BUILD_DIR)/elton.jar
 
+NOMER_VERSION:=0.1.2
 NOMER_JAR:=$(BUILD_DIR)/nomer.jar
 NOMER:=java -jar $(NOMER_JAR)
 
@@ -30,7 +32,7 @@ $(STAMP):
 	mkdir -p $(BUILD_DIR) && touch $@
 
 $(ELTON_JAR): $(STAMP)
-	wget -q "https://github.com/globalbioticinteractions/elton/releases/download/0.4.5/elton.jar" -O $(ELTON_JAR)
+	wget -q "https://github.com/globalbioticinteractions/elton/releases/download/$(ELTON_VERSION)/elton.jar" -O $(ELTON_JAR)
 
 $(NAMES): $(ELTON_JAR)
 	$(ELTON) update --cache-dir=$(BUILD_DIR)/datasets
@@ -41,7 +43,7 @@ $(NAMES): $(ELTON_JAR)
 update: $(NAMES)
 
 $(NOMER_JAR):
-	wget -q "https://github.com/globalbioticinteractions/nomer/releases/download/0.1.2/nomer.jar" -O $(NOMER_JAR)
+	wget -q "https://github.com/globalbioticinteractions/nomer/releases/download/$(NOMER_VERSION)/nomer.jar" -O $(NOMER_JAR)
 
 $(BUILD_DIR)/term_link.tsv.gz:
 	wget -q "$(TAXON_GRAPH_URL_PREFIX)/taxonMap.tsv.gz" -O $(BUILD_DIR)/term_link.tsv.gz
