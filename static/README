@@ -15,7 +15,7 @@ Files
       this file
 
   taxonCache.tsv.gz 
-     Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.2/taxon-0.3.3.zip on 2018-06-12.
+     Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.4/taxon-0.3.4.zip on 2018-06-27.
  
   taxonCache.tsv.gz.md5
      md5 hash of taxonCache.tsv.gz
@@ -24,7 +24,7 @@ Files
       Header and 10 following lines from taxonCache.tsv.gz.
  
   taxonMap.tsv.gz 
-      Links between taxon name and ids across various taxon providers. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.2/taxon-0.3.3.zip on 2018-06-12. 
+      Links between taxon name and ids across various taxon providers. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.4/taxon-0.3.4.zip on 2018-06-27. 
 
   taxonMap.tsv.gz.md5 
       md5 hash of taxonMap.tsv.gz.md5 
@@ -110,7 +110,7 @@ This taxon archive version includes the following:
 
 org.globalbioticinteractions.taxon v0.3.3, 2018-06-12
 
-This taxon archive versoin includes the following:
+This taxon archive version includes the following:
 
 1. normalizing taxonomic ranks using nomer's taxon rank matcher
 
@@ -119,5 +119,10 @@ This taxon archive versoin includes the following:
 3. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023 . 
 
 4. remove mapping to NCBI taxa with name "Small" (and associated OTT).
+
+
+org.globalbioticinteractions.taxon v0.3.4, 2018-06-27
+
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
 
 Please note that nomer and elton rely on web accessible apis like taxonomy resolution services and data portals. This dependence on external web-only accessible services might make reproduction of the results tricky due to network outages, server failures, upgrades, downgrades, data loss and/or abandonment of informatics projects/ datasets. 
