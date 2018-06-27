@@ -20,6 +20,6 @@ $ git clone https://github.com/globalbioticinteractions/taxon-graph-builder
 $ cd taxon-graph-builder
 $ make
 [...  hours later ...]
-$ ls -1 dist/taxon-graph.zip
-dist/taxon-graph.zip
+$ ls -1 dist/taxon-graph.tar.gz
+dist/taxon-graph.tar.gz
 ```
