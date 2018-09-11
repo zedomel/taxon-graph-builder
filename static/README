@@ -126,3 +126,20 @@ org.globalbioticinteractions.taxon v0.3.4, 2018-06-27
 1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
 
 Please note that nomer and elton rely on web accessible apis like taxonomy resolution services and data portals. This dependence on external web-only accessible services might make reproduction of the results tricky due to network outages, server failures, upgrades, downgrades, data loss and/or abandonment of informatics projects/ datasets. 
+
+org.globalbioticinteractions.taxon v0.3.5, 2018-06-28
+
+1. remove dubious provided name from taxon map. Names include "no name", "unidentified".
+2. remove dubious mappings to Pavlova (e.g., Unidentified Amoebozoa -> Pavlova). Related to 1.
+3. remove dubious mappings to resolve taxa that include names like "unidentified" or "organic species"
+4. removed dubious mappings to "Boiga dendrophila"
+5. removed dubious mappings from "Chaetognatha" (arrowworm) to a suspected homonym Lepidoptera GBIF:3257692 and IRMNG:1252651
+6. removed dubious mappings from "small sharks" to multiple NCBI/OTT terms with name "Small"
+
+Please note that nomer and elton rely on web accessible apis like taxonomy resolution services and data portals. This dependence on external web-only accessible services might make reproduction of the results tricky due to network outages, server failures, upgrades, downgrades, data loss and/or abandonment of informatics projects/ datasets.
+
+org.globalbioticinteractions.taxon v0.3.6, 2018-09-10
+
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
+
+
