@@ -15,7 +15,7 @@ Files
       this file
 
   taxonCache.tsv.gz 
-     Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.4/taxon-0.3.4.zip on 2018-06-27.
+     Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. 
  
   taxonCache.tsv.gz.md5
      md5 hash of taxonCache.tsv.gz
@@ -24,7 +24,7 @@ Files
       Header and 10 following lines from taxonCache.tsv.gz.
  
   taxonMap.tsv.gz 
-      Links between taxon name and ids across various taxon providers. Accessed at https://depot.globalbioticinteractions.org/datasets/org/globalbioticinteractions/taxon/0.3.4/taxon-0.3.4.zip on 2018-06-27. 
+      Links between taxon name and ids across various taxon providers. 
 
   taxonMap.tsv.gz.md5 
       md5 hash of taxonMap.tsv.gz.md5 
