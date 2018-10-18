@@ -15,16 +15,16 @@ Files
       this file
 
   taxonCache.tsv.gz 
-     Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. 
+     Taxonomic name, ids, hierarchies, common names and thumbnail associated to taxa known to GloBI. 
  
   taxonCache.tsv.gz.md5
-     md5 hash of taxonCache.tsv.gz
+     md5 hash of taxonCache.tsv.gz
 
   taxonCacheFirst10.tsv
       Header and 10 following lines from taxonCache.tsv.gz.
  
   taxonMap.tsv.gz 
-      Links between taxon name and ids across various taxon providers. 
+      Links between taxon name and ids across various taxon providers. 
 
   taxonMap.tsv.gz.md5 
       md5 hash of taxonMap.tsv.gz.md5 
@@ -35,17 +35,17 @@ Files
   prefixes.tsv
       Term prefixes and their associated uri schemes. 
 
-  names.tsv.gz
-      Corpus of names used to resolve and link. Generated using https://github.com/globalbioticinteractions/elton .
+  names.tsv.gz
+      Corpus of names used to resolve and link. Generated using https://github.com/globalbioticinteractions/elton .
 
-  names.tsv.gz.md5
-      md5 hash of names.tsv.gz.md5
+  names.tsv.gz.md5
+      md5 hash of names.tsv.gz.md5
 
-  namesUnresolved.tsv.gz
-      Names that are not (yet) linked to name sources using https://github.com/globalbioticinteractions/nomer .
+  namesUnresolved.tsv.gz
+      Names that are not (yet) linked to name sources using https://github.com/globalbioticinteractions/nomer .
 
-  namesUnresolved.tsv.gz.md5
-      md5 hash of namesUnresolved.tsv.gz 
+  namesUnresolved.tsv.gz.md5
+      md5 hash of namesUnresolved.tsv.gz 
 
 Column Descriptions
 
@@ -68,15 +68,15 @@ Column Descriptions
     3 | resolvedTaxonId
     4 | resolvedTaxonName
 
-  names.tsv.gz
+  names.tsv.gz
 
-    1 | providedTaxonId
-    2 | providedTaxonName
+    1 | providedTaxonId
+    2 | providedTaxonName
 
-   namesUnresolved.tsv.gz
+   namesUnresolved.tsv.gz
 
-    1 | providedTaxonId
-    2 | providedTaxonName
+    1 | providedTaxonId
+    2 | providedTaxonName
 
 References
 
@@ -98,13 +98,13 @@ This taxon archive version includes the following:
 
 1. all lines in taxonMap.tsv.gz v0.3.1 that passed all validate-term-link tests defined in nomer v0.0.7 (see https://doi.org/10.5281/zenodo.1249964 or https://github.com/globalbioticinteractions/nomer/releases/tag/0.0.7).
 
-2. all lines in taxonCache.tsv.gz. v0.3.1 that passed all validate-term tests defined in nomer v0.0.7 
+2. all lines in taxonCache.tsv.gz. v0.3.1 that passed all validate-term tests defined in nomer v0.0.7 
 
 3. all lines in 1. that did *not* pass the validate-term test, were re-resolved using nomer v0.0.7 commands "append globi-enrich" and "append globi-globalnames". Only SAME_AS and SYNONYM_OF matches were used to generate new entries for taxonCache and taxonMap.
 
 4. in addition, elton v0.4.5 (see https://doi.org/10.5281/zenodo.1212599 or https://github.com/globalbioticinteractions/elton/releases/tag/0.4.5) was used to generate an up-to-date names list by running the "update" and "names" commands on 18-19 May 2018. Of the resulting names, only id/names pairs that were unknown to the taxon graph were resolved using the "append globi-enrich" and "append globi-globalnames" commands of nomer v0.0.7. Only matches classified as SAME_AS and SYNONYM_OF were used to generate new entries for taxonCache and taxonMap.
 
-5. the updated versions of taxonMap.tsv.gz and taxonCache.tsv.gz were produced by appending result of 1., 2., 3. and 4. , removing duplicate lines and sorting the result. 
+5. the updated versions of taxonMap.tsv.gz and taxonCache.tsv.gz were produced by appending result of 1., 2., 3. and 4. , removing duplicate lines and sorting the result. 
 
 6. finally, the resulting taxonMap.tsv.gz. and taxonCache.tsv.gz files were validated using the nomer v0.0.7 validate-term-link and validate-term commands, respectively. The result indicated that all lines (other than the header) passed the validation tests.
 
@@ -116,7 +116,7 @@ This taxon archive version includes the following:
 
 2. include more manual taxonomic name mappings provided by Brian Hayden and collaborators.
 
-3. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023 . 
+3. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023 . 
 
 4. remove mapping to NCBI taxa with name "Small" (and associated OTT).
 
@@ -125,7 +125,7 @@ org.globalbioticinteractions.taxon v0.3.4, 2018-06-27
 
 1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
 
-Please note that nomer and elton rely on web accessible apis like taxonomy resolution services and data portals. This dependence on external web-only accessible services might make reproduction of the results tricky due to network outages, server failures, upgrades, downgrades, data loss and/or abandonment of informatics projects/ datasets. 
+Please note that nomer and elton rely on web accessible apis like taxonomy resolution services and data portals. This dependence on external web-only accessible services might make reproduction of the results tricky due to network outages, server failures, upgrades, downgrades, data loss and/or abandonment of informatics projects/ datasets. 
 
 org.globalbioticinteractions.taxon v0.3.5, 2018-06-28
 
@@ -142,4 +142,8 @@ org.globalbioticinteractions.taxon v0.3.6, 2018-09-10
 
 1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
 
+org.globalbioticinteractions.taxon v0.3.7, 2018-10-18
 
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
+2. remove dubious mapping to Vertebrata (WORMS:370321 , http://www.marinespecies.org/aphia.php?p=taxdetails&id=370321). Also see https://github.com/jhpoelen/eol-globi-data/issues/361 .
+3. remove dubious mapping to NCBITaxon:1585532 (Beta vulgaris/Cercospora beticola mixed EST library). Also see https://github.com/jhpoelen/eol-globi-data/issues/346 and https://github.com/Planteome/samara/issues/50 .
