@@ -1,4 +1,3 @@
-
 Global Biotic Interactions: Taxon Cache and Taxon Map
 
 Global Biotic Interactions (GloBI) provides access to existing species interaction datasets (Poelen et al. 2014, http://globalbioticinteractions.org). As part of the dataset integration and aggregation, a best effort is made to resolve, match and link taxonomic names and associated vernacular/common names, hierarchies and thumbnails. 
@@ -146,4 +145,9 @@ org.globalbioticinteractions.taxon v0.3.7, 2018-10-18
 
 1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
 2. remove dubious mapping to Vertebrata (WORMS:370321 , http://www.marinespecies.org/aphia.php?p=taxdetails&id=370321). Also see https://github.com/jhpoelen/eol-globi-data/issues/361 .
-3. remove dubious mapping to NCBITaxon:1585532 (Beta vulgaris/Cercospora beticola mixed EST library). Also see https://github.com/jhpoelen/eol-globi-data/issues/346 and https://github.com/Planteome/samara/issues/50 .
+3. remove dubious mapping to NCBITaxon:1585532 (Beta vulgaris/Cercospora beticola mixed EST library). Also see https://github.com/jhpoelen/eol-globi-data/issues/346 and https://github.com/Planteome/samara/issues/50 . 
+
+org.globalbioticinteractions.taxon v0.3.8, 2018-11-15
+
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023 . 
+
