@@ -145,9 +145,15 @@ org.globalbioticinteractions.taxon v0.3.7, 2018-10-18
 
 1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
 2. remove dubious mapping to Vertebrata (WORMS:370321 , http://www.marinespecies.org/aphia.php?p=taxdetails&id=370321). Also see https://github.com/jhpoelen/eol-globi-data/issues/361 .
-3. remove dubious mapping to NCBITaxon:1585532 (Beta vulgaris/Cercospora beticola mixed EST library). Also see https://github.com/jhpoelen/eol-globi-data/issues/346 and https://github.com/Planteome/samara/issues/50 . 
+3. remove dubious mapping to NCBITaxon:1585532 (Beta vulgaris/Cercospora beticola mixed EST library). Also see https://github.com/jhpoelen/eol-globi-data/issues/346 and https://github.com/Planteome/samara/issues/50 
 
 org.globalbioticinteractions.taxon v0.3.8, 2018-11-15
 
-1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023 . 
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
+.
 
+org.globalbioticinteractions.taxon v0.3.9, 2018-11-23
+
+1. label deprecated EOL ids by applying patches in http://doi.org/10.5281/zenodo.1495266 to taxonMap.tsv.gz and taxonCache.tsv.gz . Related to https://github.com/jhpoelen/eol-globi-data/issues/383 .
+2. remove all Encyclopedia of Life thumbnail urls from taxonCache. Related to https://github.com/jhpoelen/eol-globi-data/issues/381 .
+3. remove Encyclopedia of Life external urls associated with deprecated ids from taxonCache.  
