@@ -156,4 +156,9 @@ org.globalbioticinteractions.taxon v0.3.9, 2018-11-23
 
 1. label deprecated EOL ids by applying patches in http://doi.org/10.5281/zenodo.1495266 to taxonMap.tsv.gz and taxonCache.tsv.gz . Related to https://github.com/jhpoelen/eol-globi-data/issues/383 .
 2. remove all Encyclopedia of Life thumbnail urls from taxonCache. Related to https://github.com/jhpoelen/eol-globi-data/issues/381 .
-3. remove Encyclopedia of Life external urls associated with deprecated ids from taxonCache.  
+3. remove Encyclopedia of Life external urls associated with deprecated ids from taxonCache. 
+
+
+org.globalbioticinteractions.taxon v0.3.10, 2018-11-26
+
+1. Remove suspicious name mappings related to Humpback scorpionfish (Scorpaenopsis gibbosa) by applying patch published in Poelen, Jorrit H. (2018). Global Biotic Interactions: Taxon Graph Patches (Version 0.2) [Data set]. Zenodo. http://doi.org/10.5281/zenodo.1560662 .

@@ -13,7 +13,7 @@ NOMER:=java -jar $(NOMER_JAR)
 NAMES:=$(BUILD_DIR)/names.tsv.gz
 LINKS:=$(BUILD_DIR)/links.tsv.gz
 
-TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/1495302/files
+TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/1560665/files
 
 TAXON_CACHE:=$(BUILD_DIR)/taxonCache.tsv.gz
 TAXON_MAP:=$(BUILD_DIR)/taxonMap.tsv.gz
