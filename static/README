@@ -150,7 +150,6 @@ org.globalbioticinteractions.taxon v0.3.7, 2018-10-18
 org.globalbioticinteractions.taxon v0.3.8, 2018-11-15
 
 1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
-.
 
 org.globalbioticinteractions.taxon v0.3.9, 2018-11-23
 
@@ -161,4 +160,9 @@ org.globalbioticinteractions.taxon v0.3.9, 2018-11-23
 
 org.globalbioticinteractions.taxon v0.3.10, 2018-11-26
 
-1. Remove suspicious name mappings related to Humpback scorpionfish (Scorpaenopsis gibbosa) by applying patch published in Poelen, Jorrit H. (2018). Global Biotic Interactions: Taxon Graph Patches (Version 0.2) [Data set]. Zenodo. http://doi.org/10.5281/zenodo.1560662 .
+1. Remove suspicious name mappings related to Humpback scorpionfish (Scorpaenopsis gibbosa) by applying patch published in Poelen, Jorrit H. (2018). Global Biotic Interactions: Taxon Graph Patches (Version 0.2. [Data set]. Zenodo. http://doi.org/10.5281/zenodo.1560662 
+
+org.globalbioticinteractions.taxon v0.3.11, 2018-12-21
+
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.1286023
+2. remove suspicious name mappings using: ```zcat taxonMap.tsv.gz | grep -v -i -P "\tnone\t" | grep -v -P "(GBIF|IRMNG):.*\tBrachyura$" | grep -v -P "Gamarus" |  grep -v -P "^EOL:1047365\ttrachurus trachurus" | grep -v -P "Loros\t.*Psittacidae" | grep -v -P "(GBIF|IRMNG).*Lucifer$" | grep -v -P "GBIF.*Diadema$" | gzip > taxonMapUpdated.tsv.gz```
