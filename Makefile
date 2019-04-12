@@ -2,7 +2,7 @@ SHELL=/bin/bash
 BUILD_DIR=target
 STAMP=$(BUILD_DIR)/.$(BUILD_DIR)stamp
 
-ELTON_VERSION:=0.5.6
+ELTON_VERSION:=0.5.7
 ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -Dgithub.client.id=$$GITHUB_CLIENT_ID -Dgithub.client.secret=$$GITHUB_CLIENT_SECRET -jar $(BUILD_DIR)/elton.jar
 
