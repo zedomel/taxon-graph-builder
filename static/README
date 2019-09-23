@@ -22,7 +22,7 @@ Files
   taxonCacheFirst10.tsv
       Header and 10 following lines from taxonCache.tsv.gz.
 
-  taxonCacheFirst10.tsv
+  taxonCacheFirst10.tsv.sha256
       sha256 hash of taxonCacheFirst10.tsv
        
   taxonMap.tsv.gz 
