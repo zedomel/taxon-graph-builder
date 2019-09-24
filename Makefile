@@ -2,7 +2,7 @@ SHELL=/bin/bash
 BUILD_DIR=target
 STAMP=$(BUILD_DIR)/.$(BUILD_DIR)stamp
 
-ELTON_VERSION:=0.5.13
+ELTON_VERSION:=0.5.15
 ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -Dgithub.client.id=$$GITHUB_CLIENT_ID -Dgithub.client.secret=$$GITHUB_CLIENT_SECRET -jar $(BUILD_DIR)/elton.jar
 
@@ -13,7 +13,7 @@ NOMER:=java -jar $(NOMER_JAR)
 NAMES:=$(BUILD_DIR)/names.tsv.gz
 LINKS:=$(BUILD_DIR)/links.tsv.gz
 
-TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/3378125/files
+TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/3457631/files
 
 TAXON_CACHE:=$(BUILD_DIR)/taxonCache.tsv.gz
 TAXON_MAP:=$(BUILD_DIR)/taxonMap.tsv.gz
