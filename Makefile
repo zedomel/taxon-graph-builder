@@ -15,8 +15,10 @@ LINKS:=$(BUILD_DIR)/links.tsv.gz
 
 TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/3457631/files
 
-TAXON_CACHE:=$(BUILD_DIR)/taxonCache.tsv.gz
-TAXON_MAP:=$(BUILD_DIR)/taxonMap.tsv.gz
+TAXON_CACHE_NAME:=$(BUILD_DIR)/taxonCache.tsv
+TAXON_CACHE:=$(TAXON_CACHE_NAME).gz
+TAXON_MAP_NAME:=$(BUILD_DIR)/taxonMap.tsv
+TAXON_MAP:=$(TAXON_MAP_NAME).gz
 
 DIST_DIR:=dist
 TAXON_GRAPH_ARCHIVE:=$(DIST_DIR)/taxon-graph.tar.gz
@@ -99,19 +101,19 @@ $(TAXON_CACHE) $(TAXON_MAP): $(BUILD_DIR)/term.tsv.gz
 normalize: $(TAXON_CACHE)
 
 $(TAXON_GRAPH_ARCHIVE): $(TAXON_MAP) $(TAXON_CACHE)
-	md5sum $(TAXON_MAP) | cut -d " " -f1 > $(TAXON_MAP).md5
-	md5sum $(TAXON_CACHE) | cut -d " " -f1 > $(TAXON_CACHE).md5
+	zcat $(TAXON_MAP) | sha256sum | cut -d " " -f1 > $(TAXON_MAP_NAME).sha256
+	zcat $(TAXON_CACHE) | sha256sum | cut -d " " -f1 > $(TAXON_CACHE_NAME).sha256
 	
 	mkdir -p dist
-	cp static/README static/prefixes.tsv $(TAXON_MAP) $(TAXON_MAP).md5 $(TAXON_CACHE) $(TAXON_CACHE).md5 dist/	
+	cp static/README static/prefixes.tsv $(TAXON_MAP) $(TAXON_MAP_NAME).sha256 $(TAXON_CACHE) $(TAXON_CACHE_NAME).sha256 dist/	
 	
 	zcat $(TAXON_MAP) | head -n11 > dist/taxonMapFirst10.tsv
 	zcat $(TAXON_CACHE) | head -n11 > dist/taxonCacheFirst10.tsv
 
 	cat $(BUILD_DIR)/names_sorted.tsv | gzip > dist/names.tsv.gz
-	md5sum dist/names.tsv.gz | cut -d " " -f1 > dist/names.tsv.gz.md5
+	zcat dist/names.tsv.gz | sha256sum | cut -d " " -f1 > dist/names.tsv.sha256
 	cp $(BUILD_DIR)/term_unresolved.tsv.gz dist/namesUnresolved.tsv.gz
-	md5sum dist/namesUnresolved.tsv.gz | cut -d " " -f1 > dist/namesUnresolved.tsv.gz.md5
+	zcat dist/namesUnresolved.tsv.gz | sha256sum | cut -d " " -f1 > dist/namesUnresolved.tsv.sha256
  
 	cd dist && tar cvzf taxon-graph.tar.gz README taxonMap* taxonCache* names* prefixes.tsv
 		

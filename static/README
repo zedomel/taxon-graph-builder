@@ -29,7 +29,7 @@ Files
       Links between taxon name and ids across various taxon providers. 
 
   taxonMap.tsv.sha256 
-      sha256 hash of taxonMap.tsv.gz.md5 
+      sha256 hash of taxonMap.tsv
 
   taxonMapFirst10.tsv
       Header and 10 following lines from taxonMap.tsv.gz.
@@ -43,14 +43,14 @@ Files
   names.tsv.gz
       Corpus of names used to resolve and link. Generated using https://github.com/globalbioticinteractions/elton .
 
-  names.tsv.gz.md5
-      md5 hash of names.tsv.gz.md5
+  names.tsv.sha256
+      sha256 hash of names.tsv
 
   namesUnresolved.tsv.gz
       Names that are not (yet) linked to name sources using https://github.com/globalbioticinteractions/nomer .
 
-  namesUnresolved.tsv.gz.md5
-      md5 hash of namesUnresolved.tsv.gz 
+  namesUnresolved.tsv.sha256
+      sha256 hash of namesUnresolved.tsv 
 
 Column Descriptions
 
