@@ -20,7 +20,7 @@ Files
      sha256 hash of taxonCache.tsv
 
   taxonCacheFirst10.tsv
-      Header and 10 following lines from taxonCache.tsv.gz.
+      Header and 10 following lines from taxonCache.tsv
 
   taxonCacheFirst10.tsv.sha256
       sha256 hash of taxonCacheFirst10.tsv
@@ -32,7 +32,7 @@ Files
       sha256 hash of taxonMap.tsv
 
   taxonMapFirst10.tsv
-      Header and 10 following lines from taxonMap.tsv.gz.
+      Header and 10 following lines from taxonMap.tsv
  
   taxonMapFirst10.tsv.sha256
       sha256 hash of taxonMapFirst10.tsv
