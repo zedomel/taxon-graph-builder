@@ -5,6 +5,7 @@ STAMP=$(BUILD_DIR)/.$(BUILD_DIR)stamp
 ELTON_VERSION:=0.5.16
 ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -Dgithub.client.id=$$GITHUB_CLIENT_ID -Dgithub.client.secret=$$GITHUB_CLIENT_SECRET -jar $(BUILD_DIR)/elton.jar
+ELTON_DATASET_DIR:=${BUILD_DIR}/datasets
 
 NOMER_VERSION:=0.1.7
 NOMER_JAR:=$(BUILD_DIR)/nomer.jar
@@ -37,8 +38,8 @@ $(ELTON_JAR): $(STAMP)
 	wget -q "https://github.com/globalbioticinteractions/elton/releases/download/$(ELTON_VERSION)/elton.jar" -O $(ELTON_JAR)
 
 $(NAMES): $(ELTON_JAR)
-	$(ELTON) update --cache-dir=$(BUILD_DIR)/datasets
-	$(ELTON) names --cache-dir=$(BUILD_DIR)/datasets | cut -f1-7 | gzip > $(BUILD_DIR)/globi-names.tsv.gz
+	$(ELTON) update --cache-dir=$(ELTON_DATASET_DIR)
+	$(ELTON) names --cache-dir=$(ELTON_DATASET_DIR) | cut -f1-7 | gzip > $(BUILD_DIR)/globi-names.tsv.gz
 	zcat $(BUILD_DIR)/globi-names.tsv.gz | sort | uniq | gzip > $(BUILD_DIR)/globi-names-sorted.tsv.gz
 	mv $(BUILD_DIR)/globi-names-sorted.tsv.gz $(NAMES)
 
