@@ -14,7 +14,7 @@ NOMER:=java -jar $(NOMER_JAR)
 NAMES:=$(BUILD_DIR)/names.tsv.gz
 LINKS:=$(BUILD_DIR)/links.tsv.gz
 
-TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/3463625/files
+TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/3523327/files
 
 TAXON_CACHE_NAME:=$(BUILD_DIR)/taxonCache.tsv
 TAXON_CACHE:=$(TAXON_CACHE_NAME).gz
@@ -116,7 +116,7 @@ $(TAXON_GRAPH_ARCHIVE): $(TAXON_MAP) $(TAXON_CACHE)
 	cp $(BUILD_DIR)/term_unresolved.tsv.gz dist/namesUnresolved.tsv.gz
 	zcat dist/namesUnresolved.tsv.gz | sha256sum | cut -d " " -f1 > dist/namesUnresolved.tsv.sha256
  
-	cd dist && tar cvzf taxon-graph.tar.gz README taxonMap* taxonCache* names* prefixes.tsv
+	cd dist && zip taxon-graph.zip README taxonMap* taxonCache* names* prefixes.tsv
 		
 	
 package: $(TAXON_GRAPH_ARCHIVE)
