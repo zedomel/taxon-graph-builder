@@ -7,7 +7,7 @@ ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -Dgithub.client.id=$$GITHUB_CLIENT_ID -Dgithub.client.secret=$$GITHUB_CLIENT_SECRET -jar $(BUILD_DIR)/elton.jar
 ELTON_DATASET_DIR:=${BUILD_DIR}/datasets
 
-NOMER_VERSION:=0.1.7
+NOMER_VERSION:=0.1.8
 NOMER_JAR:=$(BUILD_DIR)/nomer.jar
 NOMER:=java -jar $(NOMER_JAR)
 
