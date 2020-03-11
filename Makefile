@@ -69,8 +69,8 @@ $(TAXON_CACHE).update $(TAXON_MAP).update:
 	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f6-14 | gzip > $(BUILD_DIR)/term_match.tsv.gz
 	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f1,2,6,7 | gzip > $(BUILD_DIR)/term_link_match.tsv.gz
 	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep "NONE" | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_unresolved_once.tsv
-  zcat $(BUILD_DIR)/term_link_match.tsv.gz | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_resolved_once.tsv
-  diff --changed-group-format='%>' --unchanged-group-format='' $(BUILD_DIR)/term_resolved_once.tsv $(BUILD_DIR)/term_unresolved_once.tsv | gzip > $(BUILD_DIR)/term_unresolved.tsv.gz  
+	zcat $(BUILD_DIR)/term_link_match.tsv.gz | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_resolved_once.tsv
+	diff --changed-group-format='%>' --unchanged-group-format='' $(BUILD_DIR)/term_resolved_once.tsv $(BUILD_DIR)/term_unresolved_once.tsv | gzip > $(BUILD_DIR)/term_unresolved.tsv.gz
 
 	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep "SIMILAR_TO" | sort | uniq | gzip > $(BUILD_DIR)/term_fuzzy.tsv.gz
 
