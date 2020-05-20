@@ -29,7 +29,7 @@ TAXON_GRAPH_ARCHIVE:=$(DIST_DIR)/taxon-graph.tar.gz
 all: update resolve normalize package
 
 clean:
-	rm -rf $(BUILD_DIR)/* $(DIST_DIR)/*
+	rm -rf $(BUILD_DIR)/* $(DIST_DIR)/* .nomer/*
 
 $(STAMP):
 	mkdir -p $(BUILD_DIR) && touch $@
