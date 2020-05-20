@@ -22,7 +22,7 @@ TAXON_MAP_NAME:=$(BUILD_DIR)/taxonMap.tsv
 TAXON_MAP:=$(TAXON_MAP_NAME).gz
 
 DIST_DIR:=dist
-TAXON_GRAPH_ARCHIVE:=$(DIST_DIR)/taxon-graph.tar.gz
+TAXON_GRAPH_ARCHIVE:=$(DIST_DIR)/taxon-graph.zip
 
 .PHONY: all clean update resolve normalize package
 
@@ -56,7 +56,7 @@ $(BUILD_DIR)/term.tsv.gz:
 
 resolve: update $(NOMER_JAR) $(BUILD_DIR)/term_link.tsv.gz $(TAXON_CACHE).update $(TAXON_MAP).update
 
-$(TAXON_CACHE).update $(TAXON_MAP).update:
+$(TAXON_CACHE).update:
 	cat $(BUILD_DIR)/term_link.tsv.gz | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_link_names_sorted.tsv
 	zcat $(NAMES) | cut -f1,2 | sort | uniq > $(BUILD_DIR)/names_sorted.tsv
         # remove likely non-names (e.g., 1950-07-17 | Mecosta | Michigan)
@@ -78,11 +78,11 @@ $(TAXON_CACHE).update $(TAXON_MAP).update:
 	zcat $(BUILD_DIR)/term_match.tsv.gz | $(NOMER) validate-term | grep "all validations pass" | gzip > $(BUILD_DIR)/term_match_validated.tsv.gz
 	zcat $(BUILD_DIR)/term_link_match.tsv.gz | $(NOMER) validate-term-link | grep "all validations pass" | gzip > $(BUILD_DIR)/term_link_match_validated.tsv.gz
 
-	zcat $(BUILD_DIR)/term_match_validated.tsv.gz | grep -v "FAIL" | cut -f3- | gzip > $(TAXON_CACHE).update
 	zcat $(BUILD_DIR)/term_link_match_validated.tsv.gz | grep -v "FAIL" | cut -f3- | gzip > $(TAXON_MAP).update
+	zcat $(BUILD_DIR)/term_match_validated.tsv.gz | grep -v "FAIL" | cut -f3- | gzip > $(TAXON_CACHE).update
 
 
-$(TAXON_CACHE) $(TAXON_MAP): $(BUILD_DIR)/term.tsv.gz
+$(TAXON_CACHE): $(BUILD_DIR)/term.tsv.gz
 	# swap working files with final result
 	zcat $(BUILD_DIR)/term.tsv.gz | tail -n +2 | gzip > $(BUILD_DIR)/term_no_header.tsv.gz
 	zcat $(BUILD_DIR)/term.tsv.gz | head -n1 | gzip > $(BUILD_DIR)/term_header.tsv.gz
@@ -104,7 +104,7 @@ $(TAXON_CACHE) $(TAXON_MAP): $(BUILD_DIR)/term.tsv.gz
 
 normalize: $(TAXON_CACHE)
 
-$(TAXON_GRAPH_ARCHIVE): $(TAXON_MAP) $(TAXON_CACHE)
+$(TAXON_GRAPH_ARCHIVE): $(TAXON_CACHE)
 	zcat $(TAXON_MAP) | sha256sum | cut -d " " -f1 > $(TAXON_MAP_NAME).sha256
 	zcat $(TAXON_CACHE) | sha256sum | cut -d " " -f1 > $(TAXON_CACHE_NAME).sha256
 	
