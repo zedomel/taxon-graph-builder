@@ -59,7 +59,7 @@ resolve: update $(NOMER_JAR) $(BUILD_DIR)/term_link.tsv.gz $(TAXON_CACHE).update
 $(TAXON_CACHE).update:
 	cat $(BUILD_DIR)/term_link.tsv.gz | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_link_names_sorted.tsv
 	zcat $(NAMES) | cut -f1,2 | sort | uniq > $(BUILD_DIR)/names_sorted.tsv
-        # remove likely non-names (e.g., 1950-07-17 | Mecosta | Michigan)
+	# remove likely non-names (e.g., 1950-07-17 | Mecosta | Michigan)
 	diff --changed-group-format='%>' --unchanged-group-format='' $(BUILD_DIR)/term_link_names_sorted.tsv $(BUILD_DIR)/names_sorted.tsv | grep -v -E "([|]+.*){2}" | gzip > $(BUILD_DIR)/names_new.tsv.gz
 
 	zcat $(BUILD_DIR)/names_new.tsv.gz | $(NOMER) append globi-correct | cut -f1,2,4,5 | sort | uniq | gzip > $(BUILD_DIR)/names_new_corrected.tsv.gz
