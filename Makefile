@@ -7,14 +7,14 @@ ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -jar $(BUILD_DIR)/elton.jar
 ELTON_DATASET_DIR:=${BUILD_DIR}/datasets
 
-NOMER_VERSION:=0.1.14
+NOMER_VERSION:=0.1.17
 NOMER_JAR:=$(BUILD_DIR)/nomer.jar
 NOMER:=java -jar $(NOMER_JAR)
 
 NAMES:=$(BUILD_DIR)/names.tsv.gz
 LINKS:=$(BUILD_DIR)/links.tsv.gz
 
-TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/3992313/files
+TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/4062765/files
 
 TAXON_CACHE_NAME:=$(BUILD_DIR)/taxonCache.tsv
 TAXON_CACHE:=$(TAXON_CACHE_NAME).gz
