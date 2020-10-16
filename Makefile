@@ -2,12 +2,12 @@ SHELL=/bin/bash
 BUILD_DIR=target
 STAMP=$(BUILD_DIR)/.$(BUILD_DIR)stamp
 
-ELTON_VERSION:=0.10.2
+ELTON_VERSION:=0.10.3
 ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -jar $(BUILD_DIR)/elton.jar
 ELTON_DATASET_DIR:=${BUILD_DIR}/datasets
 
-NOMER_VERSION:=0.1.17
+NOMER_VERSION:=0.1.18
 NOMER_JAR:=$(BUILD_DIR)/nomer.jar
 NOMER:=java -jar $(NOMER_JAR)
 
@@ -66,6 +66,7 @@ $(TAXON_CACHE).update:
 	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties globi-enrich | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
 	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties plazi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties openbiodiv | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 
 	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f6-14 | gzip > $(BUILD_DIR)/term_match.tsv.gz
 	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f1,2,6,7 | gzip > $(BUILD_DIR)/term_link_match.tsv.gz
