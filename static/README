@@ -233,3 +233,7 @@ org.globalbioticinteraction.taxon v0.3.26, 2020-10-01
 
 1. adding links to Plazi treatment via nomer append plazi (see https://github.com/globalbioticinteractions/nomer/issues/23)
 by applying patches available via https://doi.org/10.5281/zenodo.4062711 .
+
+org.globalbioticinteraction.taxon v0.3.27, 2020-10-22
+
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.3240558
