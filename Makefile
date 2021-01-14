@@ -40,7 +40,7 @@ $(ELTON_JAR): $(STAMP)
 $(NAMES): $(ELTON_JAR)
 	#$(ELTON) update --cache-dir=$(ELTON_DATASET_DIR)
 	$(ELTON) names --cache-dir=$(ELTON_DATASET_DIR) | cut -f1-7 | gzip > $(BUILD_DIR)/globi-names.tsv.gz
-	zcat $(BUILD_DIR)/globi-names.tsv.gz | sort | uniq | gzip > $(BUILD_DIR)/globi-names-sorted.tsv.gz
+	cat $(BUILD_DIR)/globi-names.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/globi-names-sorted.tsv.gz
 	mv $(BUILD_DIR)/globi-names-sorted.tsv.gz $(NAMES)
 
 update: $(NAMES)
@@ -58,68 +58,68 @@ resolve: update $(NOMER_JAR) $(BUILD_DIR)/term_link.tsv.gz $(TAXON_CACHE).update
 
 $(TAXON_CACHE).update:
 	cat $(BUILD_DIR)/term_link.tsv.gz | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_link_names_sorted.tsv
-	zcat $(NAMES) | cut -f1,2 | sort | uniq > $(BUILD_DIR)/names_sorted.tsv
+	cat $(NAMES) | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/names_sorted.tsv
 	# remove likely non-names (e.g., 1950-07-17 | Mecosta | Michigan)
 	diff --changed-group-format='%>' --unchanged-group-format='' $(BUILD_DIR)/term_link_names_sorted.tsv $(BUILD_DIR)/names_sorted.tsv | grep -v -E "([|]+.*){2}" | gzip > $(BUILD_DIR)/names_new.tsv.gz
 
-	zcat $(BUILD_DIR)/names_new.tsv.gz | $(NOMER) append globi-correct | cut -f1,2,4,5 | sort | uniq | gzip > $(BUILD_DIR)/names_new_corrected.tsv.gz
-	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties globi-enrich | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
-	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
-	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties plazi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
-	zcat $(BUILD_DIR)/names_new_corrected.tsv.gz | $(NOMER) append --properties=config/corrected.properties openbiodiv | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/names_new.tsv.gz | gunzip | $(NOMER) append globi-correct | cut -f1,2,4,5 | sort | uniq | gzip > $(BUILD_DIR)/names_new_corrected.tsv.gz
+	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties globi-enrich | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties plazi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties openbiodiv | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 
-	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f6-14 | gzip > $(BUILD_DIR)/term_match.tsv.gz
-	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f1,2,6,7 | gzip > $(BUILD_DIR)/term_link_match.tsv.gz
-	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep "NONE" | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_unresolved_once.tsv
-	zcat $(BUILD_DIR)/term_link_match.tsv.gz | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_resolved_once.tsv
+	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f6-14 | gzip > $(BUILD_DIR)/term_match.tsv.gz
+	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f1,2,6,7 | gzip > $(BUILD_DIR)/term_link_match.tsv.gz
+	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep "NONE" | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_unresolved_once.tsv
+	cat $(BUILD_DIR)/term_link_match.tsv.gz | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_resolved_once.tsv
 	diff --changed-group-format='%>' --unchanged-group-format='' $(BUILD_DIR)/term_resolved_once.tsv $(BUILD_DIR)/term_unresolved_once.tsv | gzip > $(BUILD_DIR)/term_unresolved.tsv.gz
 
-	zcat $(BUILD_DIR)/term_resolved.tsv.gz | grep "SIMILAR_TO" | sort | uniq | gzip > $(BUILD_DIR)/term_fuzzy.tsv.gz
+	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep "SIMILAR_TO" | sort | uniq | gzip > $(BUILD_DIR)/term_fuzzy.tsv.gz
 
 	# validate newly resolved terms and their links
-	zcat $(BUILD_DIR)/term_match.tsv.gz | $(NOMER) validate-term | grep "all validations pass" | gzip > $(BUILD_DIR)/term_match_validated.tsv.gz
-	zcat $(BUILD_DIR)/term_link_match.tsv.gz | $(NOMER) validate-term-link | grep "all validations pass" | gzip > $(BUILD_DIR)/term_link_match_validated.tsv.gz
+	cat $(BUILD_DIR)/term_match.tsv.gz | gunzip | $(NOMER) validate-term | grep "all validations pass" | gzip > $(BUILD_DIR)/term_match_validated.tsv.gz
+	cat $(BUILD_DIR)/term_link_match.tsv.gz | gunzip | $(NOMER) validate-term-link | grep "all validations pass" | gzip > $(BUILD_DIR)/term_link_match_validated.tsv.gz
 
-	zcat $(BUILD_DIR)/term_link_match_validated.tsv.gz | grep -v "FAIL" | cut -f3- | gzip > $(TAXON_MAP).update
-	zcat $(BUILD_DIR)/term_match_validated.tsv.gz | grep -v "FAIL" | cut -f3- | gzip > $(TAXON_CACHE).update
+	cat $(BUILD_DIR)/term_link_match_validated.tsv.gz | gunzip | grep -v "FAIL" | cut -f3- | gzip > $(TAXON_MAP).update
+	cat $(BUILD_DIR)/term_match_validated.tsv.gz | gunzip | grep -v "FAIL" | cut -f3- | gzip > $(TAXON_CACHE).update
 
 
 $(TAXON_CACHE): $(BUILD_DIR)/term.tsv.gz
 	# swap working files with final result
-	zcat $(BUILD_DIR)/term.tsv.gz | tail -n +2 | gzip > $(BUILD_DIR)/term_no_header.tsv.gz
-	zcat $(BUILD_DIR)/term.tsv.gz | head -n1 | gzip > $(BUILD_DIR)/term_header.tsv.gz
+	cat $(BUILD_DIR)/term.tsv.gz | gunzip | tail -n +2 | gzip > $(BUILD_DIR)/term_no_header.tsv.gz
+	cat $(BUILD_DIR)/term.tsv.gz | gunzip | head -n1 | gzip > $(BUILD_DIR)/term_header.tsv.gz
 	
-	zcat $(BUILD_DIR)/term_link.tsv.gz | tail -n +2 | gzip > $(BUILD_DIR)/term_link_no_header.tsv.gz
-	zcat $(BUILD_DIR)/term_link.tsv.gz | head -n1 | gzip > $(BUILD_DIR)/term_link_header.tsv.gz
+	cat $(BUILD_DIR)/term_link.tsv.gz | gunzip | tail -n +2 | gzip > $(BUILD_DIR)/term_link_no_header.tsv.gz
+	cat $(BUILD_DIR)/term_link.tsv.gz | gunzip | head -n1 | gzip > $(BUILD_DIR)/term_link_header.tsv.gz
 	
-	zcat $(TAXON_CACHE).update $(BUILD_DIR)/term_no_header.tsv.gz | sort | uniq | gzip > $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz
-	zcat $(TAXON_MAP).update $(BUILD_DIR)/term_link_no_header.tsv.gz | sort | uniq | gzip > $(BUILD_DIR)/taxonMapNoHeader.tsv.gz
+	cat $(TAXON_CACHE).update $(BUILD_DIR)/term_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz
+	cat $(TAXON_MAP).update $(BUILD_DIR)/term_link_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonMapNoHeader.tsv.gz
 
 	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeader.tsv.gz > $(TAXON_MAP)
 	# normalize the ranks using nomer
-	zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f3 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_ranks.tsv
-	zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f7 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_path_ranks.tsv
+	cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f3 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_ranks.tsv
+	cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f7 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_path_ranks.tsv
 
 	
-	paste <(zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f1-2) <(cat $(BUILD_DIR)/norm_ranks.tsv) <(zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f4-6) <(cat $(BUILD_DIR)/norm_path_ranks.tsv) <(zcat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | tail -n +2 | cut -f8-) | gzip > $(BUILD_DIR)/taxonCacheNorm.tsv.gz
+	paste <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f1-2) <(cat $(BUILD_DIR)/norm_ranks.tsv) <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f4-6) <(cat $(BUILD_DIR)/norm_path_ranks.tsv) <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f8-) | gzip > $(BUILD_DIR)/taxonCacheNorm.tsv.gz
 	cat $(BUILD_DIR)/term_header.tsv.gz $(BUILD_DIR)/taxonCacheNorm.tsv.gz > $(TAXON_CACHE)
 
 normalize: $(TAXON_CACHE)
 
 $(TAXON_GRAPH_ARCHIVE): $(TAXON_CACHE)
-	zcat $(TAXON_MAP) | sha256sum | cut -d " " -f1 > $(TAXON_MAP_NAME).sha256
-	zcat $(TAXON_CACHE) | sha256sum | cut -d " " -f1 > $(TAXON_CACHE_NAME).sha256
+	cat $(TAXON_MAP) | gunzip | sha256sum | cut -d " " -f1 > $(TAXON_MAP_NAME).sha256
+	cat $(TAXON_CACHE) | gunzip | sha256sum | cut -d " " -f1 > $(TAXON_CACHE_NAME).sha256
 	
 	mkdir -p dist
 	cp static/README static/prefixes.tsv $(TAXON_MAP) $(TAXON_MAP_NAME).sha256 $(TAXON_CACHE) $(TAXON_CACHE_NAME).sha256 dist/	
 	
-	zcat $(TAXON_MAP) | head -n11 > dist/taxonMapFirst10.tsv
-	zcat $(TAXON_CACHE) | head -n11 > dist/taxonCacheFirst10.tsv
+	cat $(TAXON_MAP) | gunzip | head -n11 > dist/taxonMapFirst10.tsv
+	cat $(TAXON_CACHE) | gunzip | head -n11 > dist/taxonCacheFirst10.tsv
 
 	cat $(BUILD_DIR)/names_sorted.tsv | gzip > dist/names.tsv.gz
-	zcat dist/names.tsv.gz | sha256sum | cut -d " " -f1 > dist/names.tsv.sha256
+	cat dist/names.tsv.gz | gunzip | sha256sum | cut -d " " -f1 > dist/names.tsv.sha256
 	cp $(BUILD_DIR)/term_unresolved.tsv.gz dist/namesUnresolved.tsv.gz
-	zcat dist/namesUnresolved.tsv.gz | sha256sum | cut -d " " -f1 > dist/namesUnresolved.tsv.sha256
+	cat dist/namesUnresolved.tsv.gz | gunzip | sha256sum | cut -d " " -f1 > dist/namesUnresolved.tsv.sha256
  
 	cd dist && zip taxon-graph.zip README taxonMap* taxonCache* names* prefixes.tsv
 		
