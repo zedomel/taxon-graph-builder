@@ -14,7 +14,7 @@ NOMER:=java -jar $(NOMER_JAR)
 NAMES:=$(BUILD_DIR)/names.tsv.gz
 LINKS:=$(BUILD_DIR)/links.tsv.gz
 
-TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/4062765/files
+TAXON_GRAPH_URL_PREFIX:=https://zenodo.org/record/4451472/files
 
 TAXON_CACHE_NAME:=$(BUILD_DIR)/taxonCache.tsv
 TAXON_CACHE:=$(TAXON_CACHE_NAME).gz
@@ -92,10 +92,19 @@ $(TAXON_CACHE): $(BUILD_DIR)/term.tsv.gz
 	cat $(BUILD_DIR)/term_link.tsv.gz | gunzip | tail -n +2 | gzip > $(BUILD_DIR)/term_link_no_header.tsv.gz
 	cat $(BUILD_DIR)/term_link.tsv.gz | gunzip | head -n1 | gzip > $(BUILD_DIR)/term_link_header.tsv.gz
 	
-	cat $(TAXON_CACHE).update $(BUILD_DIR)/term_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz
-	cat $(TAXON_MAP).update $(BUILD_DIR)/term_link_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonMapNoHeader.tsv.gz
+	cat $(TAXON_CACHE).update $(BUILD_DIR)/term_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonCacheNoHeaderPart.tsv.gz
+	cat $(TAXON_MAP).update $(BUILD_DIR)/term_link_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz
 
-	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeader.tsv.gz > $(TAXON_MAP)
+	# only include NCBI taxon hierarchies via ncbi-taxon-id matcher to avoid including outcomes of https://github.com/GlobalNamesArchitecture/gni/issues/48
+	cat $(BUILD_DIR)/taxonCacheNoHeaderPart.tsv.gz | grep -v -E "^NCBI:" | grep -v -E "^OTT:" | gzip > $(BUILD_DIR)/taxonCacheNoHeaderNoNCBI.tsv.gz
+	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | grep -P "\tNCBI:" | ${NOMER} append --properties=config/ncbi-rematch.properties ncbi-taxon-id | grep -v "NONE" | gzip > ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz
+	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | grep -v -P "\tNCBI:" | grep -v -P "\tOTT:" | gzip > $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz
+	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | cut -f1,2,6,7 | gzip > ${BUILD_DIR}/taxonMapNoHeaderWithNCBI.tsv.gz
+	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | cut -f6-14 | gzip > ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz
+
+	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderWithwNCBI.tsv.gz > $(TAXON_MAP)
+
+	cat ${BUILD_DIR}/taxonCacheNoHeaderNoNCBI.tsv.gz ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz > ${BUILD_DIR}/taxonCacheNoHeader.tsv.gz
 	# normalize the ranks using nomer
 	cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f3 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_ranks.tsv
 	cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f7 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_path_ranks.tsv
