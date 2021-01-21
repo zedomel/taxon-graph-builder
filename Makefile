@@ -102,7 +102,7 @@ $(TAXON_CACHE): $(BUILD_DIR)/term.tsv.gz
 	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | cut -f1,2,6,7 | gzip > ${BUILD_DIR}/taxonMapNoHeaderWithNCBI.tsv.gz
 	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | cut -f6-14 | gzip > ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz
 
-	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderWithwNCBI.tsv.gz > $(TAXON_MAP)
+	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderWithNCBI.tsv.gz > $(TAXON_MAP)
 
 	cat ${BUILD_DIR}/taxonCacheNoHeaderNoNCBI.tsv.gz ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz > ${BUILD_DIR}/taxonCacheNoHeader.tsv.gz
 	# normalize the ranks using nomer
