@@ -114,7 +114,8 @@ $(TAXON_CACHE): $(BUILD_DIR)/term.tsv.gz
 	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | gunzip | cut -f1,2,6,7 | gzip > ${BUILD_DIR}/taxonMapNoHeaderWithNCBI.tsv.gz
 	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | gunzip | cut -f6-14 | gzip > ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz
 
-	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderWithNCBI.tsv.gz > $(TAXON_MAP)
+	cat $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderWithNCBI.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonMapNoHeaderWithAll.tsv.gz
+	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderWithAll.tsv.gz > $(TAXON_MAP)
 
 	cat ${BUILD_DIR}/taxonCacheNoHeaderNoNCBI.tsv.gz ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz > ${BUILD_DIR}/taxonCacheNoHeader.tsv.gz
 	# normalize the ranks using nomer
@@ -122,7 +123,7 @@ $(TAXON_CACHE): $(BUILD_DIR)/term.tsv.gz
 	cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f7 | awk -F '\t' '{ print $$1 "\t" $$1 }' | $(NOMER) replace --properties=config/name2id.properties globi-taxon-rank | cut -f1 | $(NOMER) replace --properties=config/id2name.properties globi-taxon-rank > $(BUILD_DIR)/norm_path_ranks.tsv
 
 	
-	paste <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f1-2) <(cat $(BUILD_DIR)/norm_ranks.tsv) <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f4-6) <(cat $(BUILD_DIR)/norm_path_ranks.tsv) <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f8-) | gzip > $(BUILD_DIR)/taxonCacheNorm.tsv.gz
+	paste <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f1-2) <(cat $(BUILD_DIR)/norm_ranks.tsv) <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f4-6) <(cat $(BUILD_DIR)/norm_path_ranks.tsv) <(cat $(BUILD_DIR)/taxonCacheNoHeader.tsv.gz | gunzip | tail -n +2 | cut -f8-) | sort | uniq | gzip > $(BUILD_DIR)/taxonCacheNorm.tsv.gz
 	cat $(BUILD_DIR)/term_header.tsv.gz $(BUILD_DIR)/taxonCacheNorm.tsv.gz > $(TAXON_CACHE)
 
 normalize: $(TAXON_CACHE)
