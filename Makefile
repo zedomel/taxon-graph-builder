@@ -108,11 +108,11 @@ $(TAXON_CACHE): $(BUILD_DIR)/term.tsv.gz
 	cat $(TAXON_MAP).update $(BUILD_DIR)/term_link_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz
 
 	# only include NCBI taxon hierarchies via ncbi-taxon-id matcher to avoid including outcomes of https://github.com/GlobalNamesArchitecture/gni/issues/48
-	cat $(BUILD_DIR)/taxonCacheNoHeaderPart.tsv.gz | grep -v -E "^NCBI:" | grep -v -E "^OTT:" | gzip > $(BUILD_DIR)/taxonCacheNoHeaderNoNCBI.tsv.gz
-	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | grep -P "\tNCBI:" | ${NOMER} append --properties=config/ncbi-rematch.properties ncbi-taxon-id | grep -v "NONE" | gzip > ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz
-	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | grep -v -P "\tNCBI:" | grep -v -P "\tOTT:" | gzip > $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz
-	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | cut -f1,2,6,7 | gzip > ${BUILD_DIR}/taxonMapNoHeaderWithNCBI.tsv.gz
-	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | cut -f6-14 | gzip > ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz
+	cat $(BUILD_DIR)/taxonCacheNoHeaderPart.tsv.gz | gunzip | grep -v -E "^NCBI:" | grep -v -E "^OTT:" | gzip > $(BUILD_DIR)/taxonCacheNoHeaderNoNCBI.tsv.gz
+	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | gunzip | grep -P "\tNCBI:" | ${NOMER} append --properties=config/ncbi-rematch.properties ncbi-taxon-id | grep -v "NONE" | gzip > ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz
+	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | gunzip | grep -v -P "\tNCBI:" | grep -v -P "\tOTT:" | gzip > $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz
+	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | gunzip | cut -f1,2,6,7 | gzip > ${BUILD_DIR}/taxonMapNoHeaderWithNCBI.tsv.gz
+	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | gunzip | cut -f6-14 | gzip > ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz
 
 	cat $(BUILD_DIR)/term_link_header.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz $(BUILD_DIR)/taxonMapNoHeaderWithNCBI.tsv.gz > $(TAXON_MAP)
 
@@ -132,7 +132,7 @@ $(TAXON_GRAPH_ARCHIVE): $(TAXON_CACHE)
 	cat $(TAXON_CACHE) | gunzip | sha256sum | cut -d " " -f1 > $(TAXON_CACHE_NAME).sha256
 	
 	mkdir -p dist
-	cp static/README static/prefixes.tsv $(TAXON_MAP) $(TAXON_MAP_NAME).sha256 $(TAXON_CACHE) $(TAXON_CACHE_NAME).sha256 dist/	
+	cp static/README static/prefixes.tsv $(TAXON_MAP) $(TAXON_MAP_NAME).sha256 $(TAXON_CACHE) $(TAXON_CACHE_NAME).sha256 dist/
 	
 	cat $(TAXON_MAP) | gunzip | head -n11 > dist/taxonMapFirst10.tsv
 	cat $(TAXON_CACHE) | gunzip | head -n11 > dist/taxonCacheFirst10.tsv
