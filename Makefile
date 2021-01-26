@@ -67,7 +67,7 @@ $(TAXON_CACHE).update:
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append globi-enrich | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append plazi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
-	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties openbiodiv | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append openbiodiv | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep -v "NONE" | gzip > $(BUILD_DIR)/term_resolved_once.tsv.gz
 	mv $(BUILD_DIR)/term_resolved_once.tsv.gz $(BUILD_DIR)/term_resolved.tsv.gz
