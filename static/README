@@ -237,3 +237,11 @@ by applying patches available via https://doi.org/10.5281/zenodo.4062711 .
 org.globalbioticinteraction.taxon v0.3.27, 2020-10-22
 
 1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.3240558
+
+org.globalbioticinteraction.taxon v0.3.28, 2021-01-19
+
+1. update taxonCache and taxonMap using patch 20210114-01 available via Poelen, Jorrit H. (2021). Global Biotic Interactions: Taxon Graph Patches (Version 0.6) [Data set]. Zenodo. http://doi.org/10.5281/zenodo.4451462 .
+
+org.globalbioticinteractions.taxon v0.3.29, 2021-01-26
+
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.3240558
