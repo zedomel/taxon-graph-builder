@@ -84,7 +84,7 @@ $(TAXON_CACHE).update:
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF)" | cut -f1,2,6,7 | gzip > $(BUILD_DIR)/term_link_match.tsv.gz
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep "NONE" | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_unresolved_once.tsv
 	cat $(BUILD_DIR)/term_link_match.tsv.gz | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_resolved_once.tsv
-	diff --changed-group-format='%>' --unchanged-group-format='' $(BUILD_DIR)/term_resolved_once.tsv $(BUILD_DIR)/term_unresolved_once.tsv | gzip > $(BUILD_DIR)/term_unresolved.tsv.gz
+
 
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep "SIMILAR_TO" | sort | uniq | gzip > $(BUILD_DIR)/term_fuzzy.tsv.gz
 
@@ -140,7 +140,9 @@ $(TAXON_GRAPH_ARCHIVE): $(TAXON_CACHE)
 
 	cat $(BUILD_DIR)/names_sorted.tsv | gzip > dist/names.tsv.gz
 	cat dist/names.tsv.gz | gunzip | sha256sum | cut -d " " -f1 > dist/names.tsv.sha256
-	cp $(BUILD_DIR)/term_unresolved.tsv.gz dist/namesUnresolved.tsv.gz
+
+	diff --changed-group-format='%<' --unchanged-group-format='' <(cat dist/names.tsv.gz | gunzip | cut -f1,2 | sort | uniq) <(cat dist/taxonMap.tsv.gz | gunzip | tail -n+2 | cut -f1,2 | sort | uniq) | gzip > dist/namesUnresolved.tsv.gz
+
 	cat dist/namesUnresolved.tsv.gz | gunzip | sha256sum | cut -d " " -f1 > dist/namesUnresolved.tsv.sha256
  
 	cd dist && zip taxon-graph.zip README taxonMap* taxonCache* names* prefixes.tsv
