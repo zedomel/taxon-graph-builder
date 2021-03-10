@@ -245,3 +245,8 @@ org.globalbioticinteraction.taxon v0.3.28, 2021-01-19
 org.globalbioticinteractions.taxon v0.3.29, 2021-01-26
 
 1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.3240558
+
+rg.globalbioticinteractions.taxon v0.3.30, 2021-03-10
+
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.3240558
+
