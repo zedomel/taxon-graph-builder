@@ -25,3 +25,24 @@ $ make
 $ ls -1 dist/taxon-graph.tar.gz
 dist/taxon-graph.tar.gz
 ```
+
+## Deploy
+
+To deploy a GloBI taxon graph, you can use:
+
+### Maven
+
+To package and deploy the taxon graph using a maven repository:
+
+```
+sudo mvn --settings /etc/globi/.m2/settings.xml deploy:deploy-file -DartifactId=taxon -DgroupId=org.globalbioticinteractions -Dversion=[some version] -Dfile=[some file path] -Dpackaging=zip -DrepositoryId=globi-datasets -Durl=s3://globi/datasets
+```
+
+
+### Zenodo
+
+Create a Zenodo deposit (e.g., https://zenodo.org/record/4753955), then upload dist artifacts (excluding the prepackaged zip) using 
+
+```
+ls -1 | xargs -L1 bash ~/zenodo-upload/zenodo_upload.sh [some deposit id]
+```
