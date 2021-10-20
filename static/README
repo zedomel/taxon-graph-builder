@@ -256,9 +256,13 @@ org.globalbioticinteractions.taxon v0.3.31, 2021-03-31
 
 org.globalbioticinteractions.taxon v0.3.32, 2021-05-12
 
-1. update taxonCache and taxonMap using automated scripts available at https://$
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.3240558
 2. remove suspicious mappings from Fungal to some virus name described in https://www.gbif.org/species/4904189 Fungal see https://github.com/globalbioticinteractions/mangal/issues/1#issuecomment-833956239 .
 
 org.globalbioticinteractions.taxon v0.3.33, 2021-06-23
 
 1. remove suspicious viral name mappings as reported in https://github.com/globalbioticinteractions/globalbioticinteractions/issues/672 by updating taxonMap.tsv.gz using patch 20210623-01 available via Poelen, Jorrit H. (2021). Global Biotic Interactions: Taxon Graph Patches (Version 0.8) [Data set]. Zenodo. http://doi.org/10.5281/zenodo.5021824 .
+
+org.globalbioticinteractions.taxon v0.3.34, 2021-09-24
+
+1. update taxonCache and taxonMap using automated scripts available at https://doi.org/10.5281/zenodo.3240558

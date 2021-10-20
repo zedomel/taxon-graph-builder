@@ -7,7 +7,7 @@ ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -jar $(BUILD_DIR)/elton.jar
 ELTON_DATASET_DIR:=${BUILD_DIR}/datasets
 
-NOMER_VERSION:=0.2.1
+NOMER_VERSION:=0.2.4
 NOMER_JAR:=$(BUILD_DIR)/nomer.jar
 NOMER:=java -jar $(NOMER_JAR)
 
