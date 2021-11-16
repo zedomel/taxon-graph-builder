@@ -2,7 +2,7 @@ SHELL=/bin/bash
 BUILD_DIR=target
 STAMP=$(BUILD_DIR)/.$(BUILD_DIR)stamp
 
-ELTON_VERSION:=0.12.0
+ELTON_VERSION:=0.12.2
 ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -jar $(BUILD_DIR)/elton.jar
 ELTON_DATASET_DIR:=${BUILD_DIR}/datasets
