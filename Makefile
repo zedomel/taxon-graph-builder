@@ -121,9 +121,9 @@ $(TAXON_CACHE): $(BUILD_DIR)/term.tsv.gz
 	cat $(TAXON_CACHE).update $(BUILD_DIR)/term_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonCacheNoHeaderPart.tsv.gz
 	cat $(TAXON_MAP).update $(BUILD_DIR)/term_link_no_header.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz
 
-	# only include NCBI taxon hierarchies via ncbi-taxon-id matcher to avoid including outcomes of https://github.com/GlobalNamesArchitecture/gni/issues/48
+	# only include NCBI taxon hierarchies via ncbi matcher to avoid including outcomes of https://github.com/GlobalNamesArchitecture/gni/issues/48
 	cat $(BUILD_DIR)/taxonCacheNoHeaderPart.tsv.gz | gunzip | grep -v -E "^NCBI:" | grep -v -E "^OTT:" | gzip > $(BUILD_DIR)/taxonCacheNoHeaderNoNCBI.tsv.gz
-	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | gunzip | grep -P "\tNCBI:" | ${NOMER} append --properties=config/ncbi-rematch.properties ncbi-taxon-id | grep -v "NONE" | gzip > ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz
+	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | gunzip | grep -P "\tNCBI:" | ${NOMER} append --properties=config/ncbi-rematch.properties ncbi | grep -v "NONE" | gzip > ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz
 	cat $(BUILD_DIR)/taxonMapNoHeaderPart.tsv.gz | gunzip | grep -v -P "\tNCBI:" | grep -v -P "\tOTT:" | gzip > $(BUILD_DIR)/taxonMapNoHeaderNoNCBI.tsv.gz
 	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | gunzip | cut -f1,2,6,7 | gzip > ${BUILD_DIR}/taxonMapNoHeaderWithNCBI.tsv.gz
 	cat ${BUILD_DIR}/taxonMapNoHeaderMatchNCBIAgain.tsv.gz | gunzip | cut -f6-14 | gzip > ${BUILD_DIR}/taxonCacheNoHeaderWithNCBI.tsv.gz
