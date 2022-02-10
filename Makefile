@@ -158,8 +158,6 @@ $(TAXON_GRAPH_ARCHIVE): $(TAXON_CACHE)
 	diff --changed-group-format='%<' --unchanged-group-format='' <(cat dist/names.tsv.gz | gunzip | cut -f1,2 | sort | uniq) <(cat dist/taxonMap.tsv.gz | gunzip | tail -n+2 | cut -f1,2 | sort | uniq) | gzip > dist/namesUnresolved.tsv.gz
 
 	cat dist/namesUnresolved.tsv.gz | gunzip | sha256sum | cut -d " " -f1 > dist/namesUnresolved.tsv.sha256
- 
-	cd dist && zip taxon-graph.zip README taxonMap* taxonCache* names* prefixes.tsv
 		
 	
 package: $(TAXON_GRAPH_ARCHIVE)
