@@ -39,7 +39,7 @@ $(ELTON_JAR): $(STAMP)
 
 $(NAMES): $(ELTON_JAR)
 	#$(ELTON) update --cache-dir=$(ELTON_DATASET_DIR)
-	$(ELTON) names --cache-dir=$(ELTON_DATASET_DIR) | cut -f1-7 | gzip > $(BUILD_DIR)/globi-names.tsv.gz
+	$(ELTON) names --cache-dir=$(ELTON_DATASET_DIR) | tail -n+2 | cut -f1-7 | gzip > $(BUILD_DIR)/globi-names.tsv.gz
 	cat $(BUILD_DIR)/globi-names.tsv.gz | gunzip | sort | uniq | gzip > $(BUILD_DIR)/globi-names-sorted.tsv.gz
 	mv $(BUILD_DIR)/globi-names-sorted.tsv.gz $(NAMES)
 
