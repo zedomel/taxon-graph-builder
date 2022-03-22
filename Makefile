@@ -7,7 +7,7 @@ ELTON_JAR:=$(BUILD_DIR)/elton.jar
 ELTON:=java -jar $(BUILD_DIR)/elton.jar
 ELTON_DATASET_DIR:=${BUILD_DIR}/datasets
 
-NOMER_VERSION:=0.2.10
+NOMER_VERSION:=0.2.11
 NOMER_JAR:=$(BUILD_DIR)/nomer.jar
 NOMER:=java -jar $(NOMER_JAR)
 
@@ -68,15 +68,17 @@ $(TAXON_CACHE).update:
 
 	cat $(BUILD_DIR)/names_new.tsv.gz | gunzip | $(NOMER) append globi-correct | cut -f1,2,4,5 | sort | uniq | gzip > $(BUILD_DIR)/names_new_corrected.tsv.gz
 
-	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append globi-enrich | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
-	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
-	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append plazi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	# commenting resolve method that rely on APIs
+        #cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append globi-enrich | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
+	#cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append plazi | gzip > $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append openbiodiv | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append itis | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append gbif | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append indexfungorum | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append discoverlife | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append ncbi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append col | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep -v "NONE" | gzip > $(BUILD_DIR)/term_resolved_once.tsv.gz
 	mv $(BUILD_DIR)/term_resolved_once.tsv.gz $(BUILD_DIR)/term_resolved.tsv.gz
@@ -84,13 +86,15 @@ $(TAXON_CACHE).update:
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep "NONE" | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_unresolved_once.tsv
 	cat $(BUILD_DIR)/term_unresolved_once.tsv | $(NOMER) append globi-correct | cut -f1,2,4,5 | sort | uniq | gzip > $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz
 
-	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties globi-enrich | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
-	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	# commenting out name resolve method that rely on (unversionsed) web apis
+        #cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties globi-enrich | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	#cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties globi-globalnames | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties plazi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties openbiodiv | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties itis | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties discoverlife | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties ncbi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties col | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties gbif | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties indexfungorum | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 
