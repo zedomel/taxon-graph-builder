@@ -60,8 +60,8 @@ $(BUILD_DIR)/namesUnresolved.tsv.gz:
 resolve: update $(NOMER_JAR) $(BUILD_DIR)/term_link.tsv.gz $(BUILD_DIR)/namesUnresolved.tsv.gz $(TAXON_CACHE).update $(TAXON_MAP).update
 
 $(TAXON_CACHE).update:
-	# make list of previously mapped and unresolved names. Including unresolved name to avoid re-matching of known "bad" names.
-	cat $(BUILD_DIR)/term_link.tsv.gz $(BUILD_DIR)/namesUnresolved.tsv.gz | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_link_names_sorted.tsv
+	# make list of previously mapped and unresolved names.
+	cat $(BUILD_DIR)/term_link.tsv.gz | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/term_link_names_sorted.tsv
 	cat $(NAMES) | gunzip | cut -f1,2 | sort | uniq > $(BUILD_DIR)/names_sorted.tsv
 	# remove likely non-names (e.g., 1950-07-17 | Mecosta | Michigan)
 	diff --changed-group-format='%>' --unchanged-group-format='' $(BUILD_DIR)/term_link_names_sorted.tsv $(BUILD_DIR)/names_sorted.tsv | grep -v -E "([|]+.*){2}" | gzip > $(BUILD_DIR)/names_new.tsv.gz
