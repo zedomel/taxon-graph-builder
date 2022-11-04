@@ -79,6 +79,7 @@ $(TAXON_CACHE).update:
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append discoverlife | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append ncbi | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append col | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/names_new_corrected.tsv.gz | gunzip | $(NOMER) append wfo | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep -v "NONE" | gzip > $(BUILD_DIR)/term_resolved_once.tsv.gz
 	mv $(BUILD_DIR)/term_resolved_once.tsv.gz $(BUILD_DIR)/term_resolved.tsv.gz
@@ -97,6 +98,7 @@ $(TAXON_CACHE).update:
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties col | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties gbif | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties indexfungorum | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
+	cat $(BUILD_DIR)/term_unresolved_once_corrected.tsv.gz | gunzip | $(NOMER) append --properties=config/corrected.properties wfo | gzip >> $(BUILD_DIR)/term_resolved.tsv.gz
 
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF|HAS_ACCEPTED_NAME_OF|COMMON_NAME_OF)" | cut -f6-14 | gzip > $(BUILD_DIR)/term_match.tsv.gz
 	cat $(BUILD_DIR)/term_resolved.tsv.gz | gunzip | grep -v "NONE" | grep -P "(SAME_AS|SYNONYM_OF|HAS_ACCEPTED_NAME|COMMON_NAME_OF)" | cut -f1,2,6,7 | gzip > $(BUILD_DIR)/term_link_match.tsv.gz
